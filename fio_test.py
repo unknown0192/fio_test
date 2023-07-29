@@ -18,7 +18,7 @@ def run_fio_test(size, rw_option):
     command = "fio"
     options = [
         "--name=my_test",
-        "--ioengine=sync",#캐시 disable
+        "--ioengine=sync"
 	"--direct=1",#캐시 disable
         "--rw={}".format(rw_option),
         "--bs=4k",
@@ -48,7 +48,7 @@ def run_fio_mix_test(size, rw_option, read_ratio, write_ratio):
     command = "fio"
     options = [
         "--name=my_test",
-        "--ioengine=sync",#캐시 disable
+        "--ioengine=sync"
 	"--direct=1",#캐시 disable
         "--rw={}".format(rw_option),
         "--rwmixread={}".format(read_ratio),
