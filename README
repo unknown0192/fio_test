@@ -1,0 +1,60 @@
+fio_test.py 의 변수지정 부분에 대한 안내
+
+TEST_FStype = 'xfs'  ##테스트 진행한 파일시스템명을 기록하기 위한 설정 단순기록용
+mixtest = 1 ##1일 경우 mixtest로 진행되며, run_fio_mix_test function작동됨, 그러므로 fio옵션중 변경이 필요할 경우 run_fio_mix_test에서 수정해야함
+
+
+def run_tests():
+    iops_pattern = r'IOPS=([\d.]+)[k]?'
+    bw_pattern = r'BW=([\d.]+)[KMGT]?[i]?B/s'
+    read_iops_pattern = r'read: IOPS=([\d.]+)[k]?'
+    read_bw_pattern = r'READ: bw=([\d.]+)[KMGT]?[i]?B/s'
+    write_iops_pattern = r'write: IOPS=([\d.]+)[k]?'
+    write_bw_pattern = r'WRITE: bw=([\d.]+)[KMGT]?[i]?B/s'
+    bw_unit = "MB/s"
+    sizes = range(10, 11, 10) ##범위 지정 10k ~100k 10k씩 증가 ###테스트할 파일 사이즈 범위 지정 부분 (범위시작, 범위마지막, 증가범위)
+    rw_options = ["read", "write", "randread", "randwrite"] ##테스트할 rw 옵션 지정, read만 할경우 read만 작성
+    mix_rw_options = ["rw","randrw"] #rwmix 테스트 경우 read,write둘다 진행되므로, 일반 read +write 와 randread+write 두가지만 선택
+    mix_read_ratio = 60 ##read ratio ##비율 지정
+    mix_write_ratio = 40 ##write ratio
+    num_iterations = 1 #반복횟수, fio 테스트를 몇회 진행할건지 지정
+
+
+
+io_result_graph.py
+
+테스트결과를 그래프로 그려주는 스크립트
+테스트 결과지는 아래와 같은 형태를 지녀야 함
+
+FSType : xfs
+Size : 10k , RW : rw Test result
+BW Average Read : 7529.00 KB/s
+IOPS Average Read : 1.88 k
+BW Average Write : 9261.00 KB/s
+IOPS Average Read : 2.31 k
+BW Average RandomRead : 9.77 KB/s
+IOPS Average RandomRead : 2.50 k
+BW Average RandomWrite : 6763.00 KB/s
+IOPS Average RandomRead : 1.69 k
+
+FSType : zfs
+Size : 10k , RW : rw Test result
+BW Average Read : 7529.00 KB/s
+IOPS Average Read : 1.88 k
+BW Average Write : 9261.00 KB/s
+IOPS Average Read : 2.31 k
+BW Average RandomRead : 9.77 KB/s
+IOPS Average RandomRead : 2.50 k
+BW Average RandomWrite : 6763.00 KB/s
+IOPS Average RandomRead : 1.69 k
+
+file_systems = ['zfs', 'xfs']  ##테스트 결과지에 기록될 파일시스템 종류 지정, zfs,xfs 순서로 파싱하여 그래프를 그리므로, 결과지의 FSType기록이 어느순으로 되어있는지 체크해야함(zfs먼저 결과기록되어있으면 zfs,xfs순)
+io_tests = ['read', 'write', 'randread', 'randwrite'] ##IO테스트 종류에 대한 부분 , 해당 부분도 파일시스템 순서와 마찬가지로 read,write,randread,randwrite순으로 기록되어있어야 함
+
+
+for io_test in io_tests:
+    plt.figure()
+    x_values = np.arange(10, 61, 10) ##파일 사이즈 범위 부분, 10k~60k 사이 테스트했다면 그에 맞게 지정해야함, 증가범위도 동일하게 fio테스트시 진행했던 사이즈 증가범위와 똑같이 지정
+
+
+
