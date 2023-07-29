@@ -65,8 +65,6 @@ def run_fio_mix_test(size, rw_option, read_ratio, write_ratio):
     full_command = [command] + options
     process = subprocess.Popen(full_command, stdout=subprocess.PIPE)
 
-    # Wait for the process to complete
-    #process.wait() #numjobs 상승시 계속 딜레이되는것으로 보임
     
     # Wait load avg
     wait_for_low_load()
