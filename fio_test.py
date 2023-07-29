@@ -32,7 +32,6 @@ def run_fio_test(size, rw_option):
 
     # Execute the command
     full_command = [command] + options
-    print(full_command)
     process = subprocess.Popen(full_command, stdout=subprocess.PIPE)
 
     
@@ -64,7 +63,6 @@ def run_fio_mix_test(size, rw_option, read_ratio, write_ratio):
 
     # Execute the command
     full_command = [command] + options
-    print(full_command)
     process = subprocess.Popen(full_command, stdout=subprocess.PIPE)
 
     # Wait for the process to complete
