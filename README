@@ -4,6 +4,12 @@ TEST_FStype = 'xfs'  ##테스트 진행한 파일시스템명을 기록하기 �
 mixtest = 1 ##1일 경우 mixtest로 진행되며, run_fio_mix_test function작동됨, 그러므로 fio옵션중 변경이 필요할 경우 run_fio_mix_test에서 수정해야함
 
 
+def wait_for_low_load():
+    while os.getloadavg()[0] > 5: ##io테스트시 서버 리소스 부족으로 일부 차이가 있을 수 있어, load를 5로 제한, 5이상일 경우 테스트 일시 중지
+        time.sleep(10)  # Wait for 10 seconds
+        print(os.getloadavg()[0],"high load,,, calm down")
+
+
 def run_tests():
     iops_pattern = r'IOPS=([\d.]+)[k]?'
     bw_pattern = r'BW=([\d.]+)[KMGT]?[i]?B/s'
