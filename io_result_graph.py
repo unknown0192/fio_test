@@ -28,8 +28,6 @@ with open('test_results.txt', 'r') as file:
             data[fs_type][io_test]['iops'].append(iops)
 
 
-print(data)
-print(data['zfs']['read']['bandwidth'])
 # 그래프 그리기
 for io_test in io_tests:
     plt.figure()
@@ -46,7 +44,6 @@ for io_test in io_tests:
     plt.xlabel('File Size (KB)')
     plt.ylabel('Throughput (MB/s)')
     plt.grid(True)
-    #plt.tight_layout()
     plt.savefig(f'{io_test}_throughput.png')
     plt.close()
 
@@ -64,6 +61,5 @@ for io_test in io_tests:
     ax.set_xticklabels(x_values)
     ax.legend()
     plt.grid(True)
-    #plt.tight_layout()
     plt.savefig(f'{io_test}_iops.png')
     plt.close()
